@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Gallery</string>
+
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Hello World</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <item name="tag_holder" type="id" />
+    <string name="transName">img</string>
+
+    <string name="navigation_title_fire">热点</string>
+    <string name="navigation_title_home">主页</string>
+    <string name="navigation_title_collect">收藏</string>
+    <string name="navigation_title_follow">关注</string>
+</resources>

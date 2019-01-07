@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <com.luoye.whr.kotlinlibrary.view.PinchImageView
+        android:id="@+id/pi_pinch_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_pinch_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="18dp"
+        android:backgroundTintMode="src_over"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_get_app_black_24dp"
+        android:transitionName="fab"
+        app:backgroundTint="#111111"/>
+
+    <com.dinuscxj.progressbar.CircleProgressBar
+        android:id="@+id/pb_pinch_progress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        app:progress_background_color="#40ffffff"
+        app:progress_end_color="@color/colorAccent"
+        app:progress_start_color="@color/colorAccent"
+        app:progress_text_color="#ffffff"
+        app:progress_text_size="15sp"
+        app:style="solid"/>
+</FrameLayout>

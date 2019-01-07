@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group>
+        <item
+            android:id="@+id/menu_search_filter_0"
+            android:title="不筛选"
+            app:showAsAction="withText"/>
+        <item
+            android:id="@+id/menu_search_filter_1"
+            android:title="500users入り"
+            app:showAsAction="withText"/>
+        <item
+            android:id="@+id/menu_search_filter_2"
+            android:title="1000users入り"
+            app:showAsAction="withText"/>
+        <item
+            android:id="@+id/menu_search_filter_3"
+            android:title="5000users入り"
+            app:showAsAction="withText"/>
+        <item
+            android:id="@+id/menu_search_filter_4"
+            android:title="10000users入り"
+            app:showAsAction="withText"/>
+    </group>
+    <group>
+        <item
+            android:id="@+id/menu_search_sort"
+            android:icon="@drawable/ic_sort_black_24dp"
+            android:title="sort"
+            app:showAsAction="always"/>
+    </group>
+</menu>

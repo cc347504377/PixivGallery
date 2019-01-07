@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nv_item_fire"
+        android:icon="@drawable/ic_navigation_whatshot"
+        android:title="@string/navigation_title_fire"/>
+    <item
+        android:id="@+id/nv_item_home"
+        android:icon="@drawable/ic_navigation_home"
+        android:title="@string/navigation_title_home"/>
+    <item
+        android:id="@+id/nv_item_collect"
+        android:icon="@drawable/ic_navigation_follow"
+        android:title="@string/navigation_title_collect"/>
+    <item
+        android:id="@+id/nv_item_follow"
+        android:icon="@drawable/ic_navigation_collection"
+        android:title="@string/navigation_title_follow"/>
+</menu>

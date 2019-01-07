@@ -1,0 +1,5 @@
+/build
+/release
+/.externalNativeBuild
+/src/androidTest
+/src/test
