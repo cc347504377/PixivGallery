@@ -1,11 +1,8 @@
 package com.luoye.whr.gallery.view.preview
 
-import android.app.ActivityOptions
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
-import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,13 +19,8 @@ class PreviewRelateListFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         val viewHolder = v.getTag(R.id.tag_holder) as ListAdapter.ViewHolder
-        val pair1 = Pair<View, String>(viewHolder.itemView, getString(R.string.transName))
-        val bundle = ActivityOptions.makeSceneTransitionAnimation(activity, pair1).toBundle()
-        startActivity(Intent().apply {
-            PreviewActivity.data = listAdapter.adapter.data
-            setClass(requireContext(), PreviewActivity::class.java)
-            putExtra("position", viewHolder.layoutPosition)
-        }, bundle)
+        PreviewActivity.startActivity(this, listAdapter.adapter.data,
+                viewHolder.layoutPosition)
     }
 
     private var illustsId = ""

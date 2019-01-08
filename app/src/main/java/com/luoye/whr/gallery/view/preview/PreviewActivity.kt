@@ -1,8 +1,11 @@
 package com.luoye.whr.gallery.view.preview
 
+import android.app.ActivityOptions
 import android.app.SharedElementCallback
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.view.View
 import com.luoye.whr.gallery.R
@@ -16,6 +19,10 @@ class PreviewActivity : AppCompatActivity() {
         intent.getIntExtra("position", 0)
     }
 
+    private val shareElementStat by lazy {
+        intent.getBooleanExtra("shareElement", false)
+    }
+
     companion object {
         var data: List<IllustsBean>? = null
         private val selectListenerList = ArrayList<(Int) -> Unit>()
@@ -24,6 +31,23 @@ class PreviewActivity : AppCompatActivity() {
          */
         fun addSelectedListener(onSelected: (Int) -> Unit) {
             selectListenerList.add(onSelected)
+        }
+
+        fun startActivity(fragment: Fragment, data: List<IllustsBean>, position: Int,
+                          shareView: View? = null) {
+            val intent = Intent().apply {
+                PreviewActivity.data = data
+                setClass(fragment.requireContext(), PreviewActivity::class.java)
+                putExtra("position", position)
+            }
+            if (shareView == null) {
+                fragment.startActivity(intent)
+            } else {
+                intent.putExtra("shareElement", true)
+                val bundle = ActivityOptions.makeSceneTransitionAnimation(fragment.requireActivity(),
+                        shareView, fragment.getString(R.string.transName)).toBundle()
+                fragment.startActivity(intent, bundle)
+            }
         }
     }
 
@@ -39,6 +63,9 @@ class PreviewActivity : AppCompatActivity() {
     }
 
     private fun initShared() {
+        if (!shareElementStat) {
+            return
+        }
         selectIndex = position
         supportPostponeEnterTransition()
         setEnterSharedElementCallback(object : SharedElementCallback() {

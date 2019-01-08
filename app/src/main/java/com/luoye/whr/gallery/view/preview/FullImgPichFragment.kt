@@ -3,6 +3,7 @@ package com.luoye.whr.gallery.view.preview
 import android.app.Activity
 import android.graphics.BitmapFactory
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.support.v4.app.Fragment
@@ -155,13 +156,17 @@ class FullImgPichFragment : Fragment(), RequestCallback {
     }
 
     private fun dismissProgress() {
-        pi_pinch_view.foreground = null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pi_pinch_view.foreground = null
+        }
         pb_pinch_progress.visibility = View.INVISIBLE
         pi_pinch_view.isEnabled = true
     }
 
     private fun showProgress() {
-        pi_pinch_view.foreground = ColorDrawable(resources.getColor(R.color.colorMask, null))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pi_pinch_view.foreground = ColorDrawable(resources.getColor(R.color.colorMask))
+        }
         pb_pinch_progress.visibility = View.VISIBLE
         pi_pinch_view.isEnabled = false
     }

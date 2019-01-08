@@ -102,6 +102,10 @@ class PreViewFragment : Fragment() {
             startActivityForResult(Intent(requireContext(), FullImgPinchActivity::class.java), requestCode)
             FullImgPinchActivity.bean = bean
         }
+        //返回
+        iv_frg_pView_back.setOnClickListener {
+            activity?.onBackPressed()
+        }
     }
 
     /**

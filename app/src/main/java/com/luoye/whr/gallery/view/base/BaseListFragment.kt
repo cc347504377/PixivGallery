@@ -143,14 +143,9 @@ abstract class BaseListFragment : BaseControlFragment(), (MutableList<String>, M
      */
     override fun onClick(v: View) {
         val viewHolder = v.getTag(R.id.tag_holder) as ListAdapter.ViewHolder
-        val pair1 = Pair<View, String>(viewHolder.itemView, getString(R.string.transName))
-        val bundle = ActivityOptions.makeSceneTransitionAnimation(activity, pair1).toBundle()
-        startActivity(Intent().apply {
-            setupPreviewSelectListener()
-            PreviewActivity.data = this@BaseListFragment.listAdapter.adapter.data
-            setClass(requireContext(), PreviewActivity::class.java)
-            putExtra("position", viewHolder.layoutPosition)
-        }, bundle)
+        setupPreviewSelectListener()
+        PreviewActivity.startActivity(this, this@BaseListFragment.listAdapter.adapter.data,
+                viewHolder.layoutPosition, viewHolder.itemView)
     }
 
     /**

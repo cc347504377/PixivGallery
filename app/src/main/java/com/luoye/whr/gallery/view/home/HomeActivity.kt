@@ -3,6 +3,7 @@ package com.luoye.whr.gallery.view.home
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.FragmentTransaction
@@ -150,8 +151,8 @@ class HomeActivity : PermissionBaseActivity(), NavigationView.OnNavigationItemSe
         drawerToggle = ActionBarDrawerToggle(this, dl_main, tb_main, R.string.drawer_open, R.string.drawer_close)
         dl_main.addDrawerListener(drawerToggle)
         //底部导航栏颜色
-        bn_main.itemIconTintList = resources.getColorStateList(R.drawable.selector_bottom_nativation_item, null)
-        bn_main.itemTextColor = resources.getColorStateList(R.drawable.selector_bottom_nativation_item, null)
+        bn_main.itemIconTintList = resources.getColorStateList(R.drawable.selector_bottom_nativation_item)
+        bn_main.itemTextColor = resources.getColorStateList(R.drawable.selector_bottom_nativation_item)
         //初始化控件引用
         nav_view.getHeaderView(0).apply {
             headView = findViewById(R.id.iv_head_img)
