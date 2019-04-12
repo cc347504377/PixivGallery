@@ -57,6 +57,6 @@
         android:scaleType="fitCenter"
         android:src="@drawable/ic_autorenew_black_24dp"
         android:transitionName="fab"
-        app:layout_behavior="com.luoye.whr.gallery.common.FabScrollBehavior"/>
+        app:layout_behavior="com.luoye.whr.pixivGallery.common.FabScrollBehavior"/>
 
 </android.support.design.widget.CoordinatorLayout>

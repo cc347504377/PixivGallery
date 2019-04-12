@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 - 2018 贵阳货车帮科技有限公司 -->
+
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Android Application Rules"
+    xmlns="http://pmd.sf.net/ruleset/1.0.0" xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd"
+    xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>Custom ruleset for ribot Android application</description>
+
+    <exclude-pattern>.*/R.java</exclude-pattern>
+    <exclude-pattern>.*/gen/.*</exclude-pattern>
+    <!-- PhantomLib:dexmaker 中使用的第三方开源库代码 https://github.com/linkedin/dexmaker -->
+    <exclude-pattern>.*/com/android/dx/.*</exclude-pattern>
+    <exclude-pattern>.*/com/google/dexmaker/.*</exclude-pattern>
+    <!-- PhantomLib:PhantomCore 中使用的第三方开源库代码 https://github.com/jOOQ/jOOR -->
+    <exclude-pattern>.*/org/joor/.*</exclude-pattern>
+    <!-- PhantomLib:PhantomCore 中用于方便反射 Android Framework 的类-->
+    <exclude-pattern>.*/mirror/.*</exclude-pattern>
+    <!-- 早年间引入的第三方源代码 -->
+    <exclude-pattern>.*/com/wlqq/utils/thirdparty/.*</exclude-pattern>
+    <!-- WLUtils 中引入的apache开源库中的代码 https://github.com/apache -->
+    <exclude-pattern>.*/com/wlqq/utils/.*/third.*</exclude-pattern>
+    <exclude-pattern>.*/com/wlqq/http/MySSLSocketFactory.java</exclude-pattern>
+    <!--WLUtils 获取应用渠道中引入的第三方代码 https://github.com/mcxiaoke/packer-ng-plugin -->
+    <exclude-pattern>.*/com/wlqq/utils/PackerNg.java</exclude-pattern>
+    <!--WLHttp 忽略老http模块代码检查 -->
+    <exclude-pattern>.*/com/wlqq/http/.*</exclude-pattern>
+    <exclude-pattern>.*/com/wlqq/securityhttp/.*</exclude-pattern>
+    <!-- UniversalLogReporter 中引入的第三方代码 https://android.googlesource.com/platform/libcore/+/android-4.1
+    .1_r1/luni/src/main/java/libcore/io/DiskLruCache.java-->
+    <exclude-pattern>.*/com/wlqq/ulreporter/cache/filecache/DiskLruCache.java</exclude-pattern>
+    <!-- 代码中直接拷贝的AsyncTask.java 源代码 -->
+    <exclude-pattern>.*/AsyncTask.java</exclude-pattern>
+
+    <rule ref="rulesets/java/android.xml" />
+    <rule ref="rulesets/java/unusedcode.xml" />
+    <rule ref="rulesets/java/strings.xml" />
+    <rule ref="rulesets/java/basic.xml" >
+        <exclude name="CollapsibleIfStatements" />
+    </rule>
+    <rule ref="rulesets/java/braces.xml" />
+    <rule ref="rulesets/java/design.xml">
+        <exclude name="GodClass" />
+        <exclude name="AvoidDeeplyNestedIfStmts" />
+        <exclude name="NonThreadSafeSingleton" />
+        <exclude name="ConfusingTernary" />
+    </rule>
+
+
+</ruleset>

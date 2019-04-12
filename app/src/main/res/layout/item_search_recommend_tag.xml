@@ -7,7 +7,7 @@
     android:layout_margin="5dp"
     app:cardCornerRadius="5dp">
 
-    <com.luoye.whr.gallery.custom.SquareImageView
+    <com.luoye.whr.pixivGallery.custom.SquareImageView
         android:id="@+id/iv_search_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

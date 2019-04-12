@@ -1,0 +1,23 @@
+apply plugin: 'pmd'
+
+pmd {
+    // do not exist, when finding issues
+    ignoreFailures = true
+}
+
+task pmd(type: Pmd, group: 'Verification', description: 'Inspect sourcecode for bugs') {
+
+    ruleSetFiles = files("${project.rootDir}/analysis/pmd-config.xml")
+    // 增加 ruleSets = [] 是为了解决 pmd-config.xml 中的 exclude-pattern 没有全部生效的问题
+    // 参考 https://stackoverflow.com/questions/32247190/pmd-exclude-pattern-with-gradle
+    ruleSets = []
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/test/**'
+    exclude '**/androidTest/**'
+    reports {
+        xml.enabled = true
+        html.enabled = !xml.enabled
+    }
+}

@@ -17,4 +17,6 @@
 
     <color name="colorItemSizeBg">#ac666666</color>
     <color name="colorGray">#91dfdfdf</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#ffffff</color>
 </resources>

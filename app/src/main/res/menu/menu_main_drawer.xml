@@ -19,9 +19,9 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Gallery" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/drawer_menu_setting"
+            android:icon="@drawable/ic_menu_setting"
+            android:title="Setting" />
     </group>
 
     <item android:title="Communicate">
