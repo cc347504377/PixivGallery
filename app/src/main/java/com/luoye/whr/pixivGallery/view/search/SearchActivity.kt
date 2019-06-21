@@ -22,7 +22,7 @@ import com.luoye.whr.pixivGallery.common.SearchAutocompleteBean
 import com.luoye.whr.pixivGallery.common.SpUtil
 import com.luoye.whr.pixivGallery.presenter.PixivImagePresenter
 import com.google.gson.Gson
-import com.luoye.whr.kotlinlibrary.net.PublicCallback
+import com.luoye.whr.pixivGallery.presenter.IllustCallback
 import org.jetbrains.anko.doAsync
 
 class SearchActivity : AppCompatActivity() {
@@ -58,8 +58,9 @@ class SearchActivity : AppCompatActivity() {
     private fun loadViewFromNet() {
         clPb_search_tag_recommend.visibility = View.VISIBLE
         clPb_search_tag_recommend.show()
-        PixivImagePresenter.getIllustTrendTags(object : PublicCallback.DataCallBack<String> {
+        PixivImagePresenter.getIllustTrendTags(object : IllustCallback<String> {
             override fun onSuccess(t: String) {
+                super.onSuccess(t)
                 doAsync {
                     SpUtil.searchBeanTime = System.currentTimeMillis()
                     SpUtil.searchBean = t
@@ -97,8 +98,9 @@ class SearchActivity : AppCompatActivity() {
                     } else {
                         iv_search_ic.visibility = View.INVISIBLE
                     }
-                    PixivImagePresenter.getSearchAutoCompleteKeywords(ac_search_input.text.toString(), object : PublicCallback.DataCallBack<SearchAutocompleteBean> {
+                    PixivImagePresenter.getSearchAutoCompleteKeywords(ac_search_input.text.toString(), object : IllustCallback<SearchAutocompleteBean> {
                         override fun onSuccess(t: SearchAutocompleteBean) {
+                            super.onSuccess(t)
                             autoComplete(t.search_auto_complete_keywords!!)
                         }
 

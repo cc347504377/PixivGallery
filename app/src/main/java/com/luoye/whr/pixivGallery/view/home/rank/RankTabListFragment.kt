@@ -5,15 +5,15 @@ import com.luoye.whr.pixivGallery.common.CommonIllustBean
 import com.luoye.whr.pixivGallery.common.IllustsBean
 import com.luoye.whr.pixivGallery.presenter.PixivImagePresenter
 import com.luoye.whr.pixivGallery.view.base.BasePageListFragment
-import com.luoye.whr.kotlinlibrary.net.PublicCallback
 import com.luoye.whr.kotlinlibrary.util.*
+import com.luoye.whr.pixivGallery.presenter.IllustCallback
 import kotlinx.android.synthetic.main.fragment_img_list.*
 
 /**
  * 图片列表Fragment
  * 通用图片展示
  */
-open class RankListFragment : BasePageListFragment() {
+open class RankTabListFragment : BasePageListFragment() {
 
     private var mode = 0
     private var date = ""
@@ -55,8 +55,9 @@ open class RankListFragment : BasePageListFragment() {
     /**
      * 网络请求回调
      */
-    private val dataCallback = object : PublicCallback.DataCallBack<CommonIllustBean> {
+    private val dataCallback = object : IllustCallback<CommonIllustBean> {
         override fun onSuccess(t: CommonIllustBean) {
+            super.onSuccess(t)
             dataOperation?.invoke(t.illusts)
             nextUrl = t.next_url
         }

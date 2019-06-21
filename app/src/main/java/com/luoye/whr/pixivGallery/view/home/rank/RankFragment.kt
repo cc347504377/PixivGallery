@@ -6,23 +6,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bigkoo.pickerview.TimePickerView
+import com.luoye.whr.kotlinlibrary.util.log
 import com.luoye.whr.pixivGallery.R
-import com.luoye.whr.pixivGallery.adapter.HomeFrgAdapter
+import com.luoye.whr.pixivGallery.adapter.RankFrgAdapter
 import com.luoye.whr.pixivGallery.common.ModeEvent
 import com.luoye.whr.pixivGallery.common.SpUtil
+import com.luoye.whr.pixivGallery.model.tabAdultData
+import com.luoye.whr.pixivGallery.model.tabData
 import com.luoye.whr.pixivGallery.view.base.BaseControlFragment
 import kotlinx.android.synthetic.main.fragment_rank.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
+/**
+ * 排行模块父fragment，管理子tab列表
+ */
 class RankFragment : BaseControlFragment() {
-    private val frgList = ArrayList<RankListFragment>()
-    private val tabList = listOf("日榜", "周榜", "月榜", "新人", "原创", "男性向", "女性向")
-    private val adultTabList = listOf("日榜", "周榜", "月榜", "新人", "原创", "男性向", "女性向", "成人向")
+
+    private val frgList = ArrayList<RankTabListFragment>()
+    private val tabList = ArrayList<String>()
     private var selectDate: String = ""
-    private var homeFrgAdapter: HomeFrgAdapter? = null
+    private var rankFrgAdapter: RankFrgAdapter? = null
+    private var modeChanged = false
 
     private val piker by lazy {
         // P站有效数据起始时间 2007.10.1
@@ -35,8 +44,7 @@ class RankFragment : BaseControlFragment() {
         }
         TimePickerView.Builder(requireContext()) { date, v ->
             selectDate = SimpleDateFormat("yyyy-MM-dd").format(date)
-            initFrg()
-            initViewpager()
+            initContent()
         }.setType(booleanArrayOf(true, true, true, false, false, false))
                 .setRangDate(startDate, endDate)
                 .setTitleText("FilterDate")
@@ -55,35 +63,36 @@ class RankFragment : BaseControlFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bt_menu.setOnClickListener {
-            piker.show()
-        }
+        EventBus.getDefault().register(this)
+        initListener()
         initContent()
     }
 
+    private fun initListener() {
+        bt_menu.setOnClickListener {
+            piker.show()
+        }
+    }
+
     private fun initContent() {
+        initTabData()
         initFrg()
         initViewpager()
     }
 
-    private fun initViewpager() {
-        homeFrgAdapter = HomeFrgAdapter(requireFragmentManager(), frgList, adultTabList)
-        vp_rank_fragment.offscreenPageLimit = frgList.size
-        vp_rank_fragment.adapter = homeFrgAdapter
-        tl_rank_fragment.setupWithViewPager(vp_rank_fragment, false)
+    private fun initTabData() {
+        tabList.clear()
+        tabList.addAll(if (SpUtil.adultMode) {
+            tabAdultData
+        } else {
+            tabData
+        })
     }
 
     private fun initFrg() {
-        requireFragmentManager().beginTransaction().apply {
-            frgList.forEach {
-                remove(it)
-                it.onDestroyView()
-            }
-            frgList.clear()
-            commit()
-        }
-        for (i in 0 until adultTabList.size) {
-            frgList.add(RankListFragment().apply {
+        frgList.clear()
+        for (i in 0 until tabList.size) {
+            frgList.add(RankTabListFragment().apply {
                 arguments = Bundle().apply {
                     putInt("mode", i)
                     putString("date", selectDate)
@@ -92,11 +101,40 @@ class RankFragment : BaseControlFragment() {
         }
     }
 
+    private fun initViewpager() {
+        if (rankFrgAdapter == null) {
+            rankFrgAdapter = RankFrgAdapter(childFragmentManager, frgList, tabList)
+            vp_rank_fragment.adapter = rankFrgAdapter
+        } else {
+            rankFrgAdapter?.notifyDataSetChanged()
+        }
+        vp_rank_fragment.offscreenPageLimit = frgList.size
+        tl_rank_fragment.setupWithViewPager(vp_rank_fragment, false)
+    }
+
     override fun changeStyle() {
         styleFlag++
         frgList.forEach {
             it.styleFlag = styleFlag
             it.changeStyle()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (modeChanged) {
+            initContent()
+            modeChanged = false
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onModeChanged(event: ModeEvent) {
+        modeChanged = true
     }
 }

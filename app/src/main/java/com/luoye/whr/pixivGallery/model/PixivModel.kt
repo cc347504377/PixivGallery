@@ -12,6 +12,9 @@ private const val HEADER_VALUE = "PixivAndroidApp/5.0.119 (Android 6.0.1; D6653)
 private const val HEADER_NAME2 = "Accept-Language"
 private const val HEADER_VALUE2 = "zh_CN"
 
+val tabData = arrayOf("日榜", "周榜", "月榜", "新人", "原创", "男性向", "女性向")
+val tabAdultData = arrayOf("日榜", "周榜", "月榜", "新人", "原创", "男性向", "女性向", "R-18")
+
 object PixivImageModel {
 
     private val retrofit = createRetrofit(BASE_URL) { it ->

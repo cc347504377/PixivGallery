@@ -6,8 +6,8 @@ import com.luoye.whr.pixivGallery.common.CommonIllustBean
 import com.luoye.whr.pixivGallery.common.IllustsBean
 import com.luoye.whr.pixivGallery.presenter.PixivImagePresenter
 import com.luoye.whr.pixivGallery.view.base.BaseTabListFragment
-import com.luoye.whr.kotlinlibrary.net.PublicCallback
 import com.luoye.whr.kotlinlibrary.util.toast
+import com.luoye.whr.pixivGallery.presenter.IllustCallback
 import kotlinx.android.synthetic.main.fragment_img_list.*
 
 class LikeFragment : BaseTabListFragment() {
@@ -41,8 +41,9 @@ class LikeFragment : BaseTabListFragment() {
     /**
      * 网络请求回调
      */
-    private val dataCallback = object : PublicCallback.DataCallBack<CommonIllustBean> {
+    private val dataCallback = object : IllustCallback<CommonIllustBean> {
         override fun onSuccess(t: CommonIllustBean) {
+            super.onSuccess(t)
             dataOperation?.invoke(t.illusts)
             nextUrl = t.next_url
         }

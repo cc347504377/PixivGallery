@@ -8,9 +8,9 @@ import com.luoye.whr.pixivGallery.common.PixivAuthBean
 import com.luoye.whr.pixivGallery.common.SpUtil
 import com.luoye.whr.pixivGallery.presenter.PixivUserPresenter
 import com.luoye.whr.pixivGallery.view.home.HomeActivity
-import com.luoye.whr.kotlinlibrary.net.PublicCallback
 import com.luoye.whr.kotlinlibrary.util.startActivity
 import com.luoye.whr.kotlinlibrary.util.toast
+import com.luoye.whr.pixivGallery.presenter.IllustCallback
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
                 return
             }
         }
-        PixivUserPresenter.postAuthToken(username, password, object : PublicCallback.DataCallBack<PixivAuthBean> {
+        PixivUserPresenter.postAuthToken(username, password, object : IllustCallback<PixivAuthBean> {
             override fun onStart() {
                 progressDialog.show()
             }
@@ -61,6 +61,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onSuccess(t: PixivAuthBean) {
+                super.onSuccess(t)
                 SpUtil.apply {
                     val user = t.response.user
                     auth = "Bearer ${t.response.accessToken}"

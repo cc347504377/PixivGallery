@@ -17,9 +17,12 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
-        st_setting_adult.setOnCheckedChangeListener { buttonView, isChecked ->
-            SpUtil.adultMode = isChecked
-            EventBus.getDefault().post(ModeEvent())
+        st_setting_adult.apply {
+            isChecked = SpUtil.adultMode
+            setOnCheckedChangeListener { buttonView, isChecked ->
+                SpUtil.adultMode = isChecked
+                EventBus.getDefault().post(ModeEvent())
+            }
         }
     }
 }

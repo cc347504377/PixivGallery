@@ -11,8 +11,8 @@ import com.luoye.whr.pixivGallery.adapter.ListAdapter
 import com.luoye.whr.pixivGallery.common.CommonIllustBean
 import com.luoye.whr.pixivGallery.common.IllustsBean
 import com.luoye.whr.pixivGallery.presenter.PixivImagePresenter
-import com.luoye.whr.kotlinlibrary.net.PublicCallback
 import com.luoye.whr.kotlinlibrary.util.toast
+import com.luoye.whr.pixivGallery.presenter.IllustCallback
 import kotlinx.android.synthetic.main.fragment_precview_relate.*
 
 class PreviewRelateListFragment : Fragment(), View.OnClickListener {
@@ -73,8 +73,9 @@ class PreviewRelateListFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private val dataCallback = object : PublicCallback.DataCallBack<CommonIllustBean> {
+    private val dataCallback = object : IllustCallback<CommonIllustBean> {
         override fun onSuccess(t: CommonIllustBean) {
+            super.onSuccess(t)
             listAdapter.adapter.apply {
                 if (loadMode == load_mode_refresh) {
                     data.clear()

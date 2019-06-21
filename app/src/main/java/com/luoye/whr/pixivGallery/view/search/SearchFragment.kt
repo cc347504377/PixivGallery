@@ -9,8 +9,8 @@ import com.luoye.whr.pixivGallery.common.SearchIllustBean
 import com.luoye.whr.pixivGallery.common.SpUtil
 import com.luoye.whr.pixivGallery.presenter.PixivImagePresenter
 import com.luoye.whr.pixivGallery.view.base.BaseActivityListFragment
-import com.luoye.whr.kotlinlibrary.net.PublicCallback
 import com.luoye.whr.kotlinlibrary.util.toast
+import com.luoye.whr.pixivGallery.presenter.IllustCallback
 import kotlinx.android.synthetic.main.fragment_img_list.*
 
 class SearchFragment : BaseActivityListFragment() {
@@ -80,8 +80,9 @@ class SearchFragment : BaseActivityListFragment() {
         ll_frg_list.refresh()
     }
 
-    private val dataCallback = object : PublicCallback.DataCallBack<SearchIllustBean> {
+    private val dataCallback = object : IllustCallback<SearchIllustBean> {
         override fun onSuccess(t: SearchIllustBean) {
+            super.onSuccess(t)
             dataOperation?.invoke(t.illusts.toMutableList())
             nextUrl = t.next_url
         }

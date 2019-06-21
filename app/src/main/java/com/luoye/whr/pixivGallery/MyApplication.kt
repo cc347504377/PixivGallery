@@ -4,8 +4,8 @@ import android.app.Application
 import com.luoye.whr.pixivGallery.common.PixivAuthBean
 import com.luoye.whr.pixivGallery.common.SpUtil
 import com.luoye.whr.pixivGallery.presenter.PixivUserPresenter
-import com.luoye.whr.kotlinlibrary.net.PublicCallback
 import com.luoye.whr.kotlinlibrary.util.toast
+import com.luoye.whr.pixivGallery.presenter.IllustCallback
 import java.lang.ref.WeakReference
 
 class MyApplication : Application() {
@@ -23,7 +23,7 @@ class MyApplication : Application() {
      * P站授权token在短时间就会失效 需要重新授权
      */
     fun refreshToken() {
-        PixivUserPresenter.refreshToken(object : PublicCallback.DataCallBack<PixivAuthBean> {
+        PixivUserPresenter.refreshToken(object :IllustCallback<PixivAuthBean> {
             override fun onStart() {
                 toast("更新用户授权信息")
             }
@@ -32,6 +32,7 @@ class MyApplication : Application() {
             }
 
             override fun onSuccess(t: PixivAuthBean) {
+                super.onSuccess(t)
                 SpUtil.apply {
                     val user = t.response.user
                     auth = "Bearer ${t.response.accessToken}"
