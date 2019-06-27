@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.request.target.Target
 import com.luoye.whr.pixivGallery.R
-import com.luoye.whr.pixivGallery.adapter.ListAdapter
+import com.luoye.whr.pixivGallery.adapter.CommonListAdapter
 import com.luoye.whr.pixivGallery.adapter.MyItemDecoration
 import com.luoye.whr.pixivGallery.common.IllustsBean
 import com.luoye.whr.pixivGallery.common.loadPixvImg
@@ -58,7 +58,7 @@ abstract class BaseListFragment : BaseControlFragment(), (MutableList<String>, M
 
     /***************共享元素**************/
 
-    private val listAdapter by lazy { ListAdapter(requireContext(), this) }
+    private val listAdapter by lazy { CommonListAdapter(requireContext(), this) }
     private val gridItemDecoration = MyItemDecoration()
     protected var nextUrl: String? = null
     protected var dataOperation: ((MutableList<IllustsBean>) -> Unit)? = null
@@ -111,7 +111,7 @@ abstract class BaseListFragment : BaseControlFragment(), (MutableList<String>, M
     protected fun loadRecyclerImg() {
         val data = listAdapter.adapter.data
         listAdapter.adapter.currentHolderList.forEach {
-            val holder = it as ListAdapter.ViewHolder
+            val holder = it as CommonListAdapter.ViewHolder
             val bean = data[holder.layoutPosition]
             if (holder.mIvItem.drawable == null) {
                 context?.loadPixvImg(bean.imageUrls.medium, bean.id, holder.mIvItem)
@@ -136,7 +136,7 @@ abstract class BaseListFragment : BaseControlFragment(), (MutableList<String>, M
      * item点击事件
      */
     override fun onClick(v: View) {
-        val viewHolder = v.getTag(R.id.tag_holder) as ListAdapter.ViewHolder
+        val viewHolder = v.getTag(R.id.tag_holder) as CommonListAdapter.ViewHolder
         setupPreviewSelectListener()
         PreviewActivity.startActivity(this, this@BaseListFragment.listAdapter.adapter.data,
                 viewHolder.layoutPosition, viewHolder.itemView)

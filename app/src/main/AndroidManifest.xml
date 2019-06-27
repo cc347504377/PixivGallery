@@ -14,10 +14,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.home.setting.SettingActivity"></activity>
-        <activity
-            android:name=".view.home.setting.SettingsActivity"
-            android:label="@string/title_activity_settings" />
+        <activity android:name=".view.home.setting.SettingActivity"
+            android:label="@string/title_activity_settings"/>
         <activity android:name=".view.home.HomeActivity" />
         <activity
             android:name=".view.preview.PreviewActivity"

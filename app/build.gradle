@@ -7,7 +7,7 @@ android {
     compileSdkVersion COMPILE_VERSION
 
     defaultConfig {
-        applicationId "com.example.cxria.gallery"
+        applicationId "com.luoye.whr.pixivGallery"
         minSdkVersion MIN_VERSION
         targetSdkVersion TARGET_VERSION
         versionCode 1

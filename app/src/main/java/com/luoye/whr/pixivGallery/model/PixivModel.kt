@@ -1,11 +1,17 @@
 package com.luoye.whr.pixivGallery.model
 
+import com.luoye.whr.kotlinlibrary.util.createRetrofit
+import com.luoye.whr.pixivGallery.MyApplication
 import com.luoye.whr.pixivGallery.api.PixivImageApi
 import com.luoye.whr.pixivGallery.api.PixivUserApi
 import com.luoye.whr.pixivGallery.common.BASE_URL
 import com.luoye.whr.pixivGallery.common.PIXIV_SECURE
 import com.luoye.whr.pixivGallery.common.SpUtil
-import com.luoye.whr.kotlinlibrary.util.createRetrofit
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import okhttp3.OkHttpClient
+import java.net.HttpURLConnection
 
 private const val HEADER_NAME = "User-Agent"
 private const val HEADER_VALUE = "PixivAndroidApp/5.0.119 (Android 6.0.1; D6653)"
@@ -17,15 +23,8 @@ val tabAdultData = arrayOf("日榜", "周榜", "月榜", "新人", "原创", "�
 
 object PixivImageModel {
 
-    private val retrofit = createRetrofit(BASE_URL) { it ->
-        //        it.dns(HttpDns())
-        it.addInterceptor {
-            val request = it.request().newBuilder()
-                    .addHeader(HEADER_NAME, HEADER_VALUE)
-                    .addHeader(HEADER_NAME2, HEADER_VALUE2)
-                    .build()
-            return@addInterceptor it.proceed(request)
-        }
+    private val retrofit = createRetrofit(BASE_URL) {
+        retrofitOperation(it)
     }
     private val api = retrofit.create(PixivImageApi::class.java)
 
@@ -49,12 +48,12 @@ object PixivImageModel {
      * 搜索
      */
     fun getSearch(
-        word: String,
-        sort: String,
-        search_target: String,
-        bookmark_num: Int? = null,
-        duration: String? = null,
-        Authorization: String
+            word: String,
+            sort: String,
+            search_target: String,
+            bookmark_num: Int? = null,
+            duration: String? = null,
+            Authorization: String
     ) = api.getSearchIllust(word, sort,
             search_target, bookmark_num, duration, Authorization)
 
@@ -95,15 +94,8 @@ object PixivUserModel {
     private const val get_secure_url = true
     private const val grant_type = "password"
 
-    private val retrofit = createRetrofit(PIXIV_SECURE) { it ->
-        //        it.dns(HttpDns())
-        it.addInterceptor {
-            val request = it.request().newBuilder()
-                    .addHeader(HEADER_NAME, HEADER_VALUE)
-                    .addHeader(HEADER_NAME2, HEADER_VALUE2)
-                    .build()
-            return@addInterceptor it.proceed(request)
-        }
+    private val retrofit = createRetrofit(PIXIV_SECURE) {
+        retrofitOperation(it)
     }
     private val api = retrofit.create(PixivUserApi::class.java)
 
@@ -112,4 +104,27 @@ object PixivUserModel {
 
     fun refreshToken() = api.refreshToken(
             client_id, client_secret, SpUtil.deviceToken, get_secure_url, grant_type_fresh, SpUtil.refreshToken)
+}
+
+fun retrofitOperation(builder: OkHttpClient.Builder) {
+    builder.addInterceptor {
+        val request = it.request().newBuilder()
+                .addHeader(HEADER_NAME, HEADER_VALUE)
+                .addHeader(HEADER_NAME2, HEADER_VALUE2)
+                .build()
+        val response = it.proceed(request)
+        if (response.code() == HttpURLConnection.HTTP_BAD_REQUEST) {
+            return@addInterceptor runBlocking {
+                val job = GlobalScope.launch {
+                    MyApplication.context.get()?.refreshTokenSync()
+                }
+                job.join()
+                val newRequest = request.newBuilder()
+                        .header("Authorization", SpUtil.auth)
+                        .build()
+                return@runBlocking it.proceed(newRequest)
+            }
+        }
+        return@addInterceptor response
+    }
 }

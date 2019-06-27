@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.luoye.whr.pixivGallery.R
-import com.luoye.whr.pixivGallery.adapter.ListAdapter
+import com.luoye.whr.pixivGallery.adapter.CommonListAdapter
 import com.luoye.whr.pixivGallery.common.CommonIllustBean
 import com.luoye.whr.pixivGallery.common.IllustsBean
 import com.luoye.whr.pixivGallery.presenter.PixivImagePresenter
@@ -18,14 +18,14 @@ import kotlinx.android.synthetic.main.fragment_precview_relate.*
 class PreviewRelateListFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
-        val viewHolder = v.getTag(R.id.tag_holder) as ListAdapter.ViewHolder
+        val viewHolder = v.getTag(R.id.tag_holder) as CommonListAdapter.ViewHolder
         PreviewActivity.startActivity(this, listAdapter.adapter.data,
                 viewHolder.layoutPosition)
     }
 
     private var illustsId = ""
     private var nextUrl: String? = null
-    private val listAdapter by lazy { ListAdapter(requireContext(), this) }
+    private val listAdapter by lazy { CommonListAdapter(requireContext(), this) }
     private var dataOperation: ((MutableList<IllustsBean>) -> Unit)? = null
 
     override fun setArguments(args: Bundle?) {
