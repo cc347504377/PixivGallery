@@ -11,7 +11,7 @@
         android:id="@+id/iv_search_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="@mipmap/tag_bg"
+        android:foreground="@drawable/ripple_search_item"
         android:scaleType="centerCrop"/>
 
     <TextView

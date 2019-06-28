@@ -3,13 +3,20 @@ package com.luoye.whr.pixivGallery.adapter
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import com.luoye.whr.pixivGallery.R
 import com.luoye.whr.pixivGallery.common.IllustsBean
 import com.luoye.whr.pixivGallery.common.loadPixvImg
 import com.luoye.whr.kotlinlibrary.base.BaseAdapter
+import com.luoye.whr.kotlinlibrary.net.PublicCallback
 import com.luoye.whr.kotlinlibrary.util.bindView
+import com.luoye.whr.kotlinlibrary.util.toast
+import com.luoye.whr.pixivGallery.MyApplication
+import com.luoye.whr.pixivGallery.presenter.IllustCallback
+import com.luoye.whr.pixivGallery.presenter.PixivImagePresenter
 
 /**
  * 图片列表适配器工厂类
@@ -19,6 +26,7 @@ import com.luoye.whr.kotlinlibrary.util.bindView
 class CommonListAdapter(private val context: Context, private val itemClickListener: View.OnClickListener) {
 
     var style = 0
+    var showLikeStat = true
     private var isFirst = true
 
     val adapter: BaseAdapter<IllustsBean>
@@ -45,8 +53,6 @@ class CommonListAdapter(private val context: Context, private val itemClickListe
             { data, holder, position ->
                 val viewHolder = holder as ViewHolder
                 val bean = data[position]
-                val mUrl = bean.imageUrls.medium
-                val illusstId = bean.id
                 bindView(viewHolder, bean)
                 viewHolder.itemView.apply {
                     if (tag == null) {
@@ -57,8 +63,6 @@ class CommonListAdapter(private val context: Context, private val itemClickListe
                             layoutParams = lp
                         }
                     }
-                    // 加载
-                    tag = context?.loadPixvImg(mUrl, illusstId, holder.mIvItem, false)
                 }
             },
             {
@@ -72,8 +76,6 @@ class CommonListAdapter(private val context: Context, private val itemClickListe
             { data, holder, position ->
                 val viewHolder = holder as ViewHolder
                 val bean = data[position]
-                val mUrl = bean.imageUrls.medium
-                val illusstId = bean.id
                 bindView(viewHolder, bean)
                 viewHolder.itemView.apply {
                     if (tag == null) {
@@ -83,8 +85,6 @@ class CommonListAdapter(private val context: Context, private val itemClickListe
                             layoutParams = lp
                         }
                     }
-                    // 加载
-                    tag = context?.loadPixvImg(mUrl, illusstId, holder.mIvItem, false)
                 }
             },
             {
@@ -98,8 +98,7 @@ class CommonListAdapter(private val context: Context, private val itemClickListe
             { data, holder, position ->
                 val viewHolder = holder as ViewHolder
                 val bean = data[position]
-                val mUrl = bean.imageUrls.medium
-                val illusstId = bean.id
+
                 bindView(viewHolder, bean)
                 viewHolder.itemView.apply {
                     post {
@@ -108,8 +107,6 @@ class CommonListAdapter(private val context: Context, private val itemClickListe
                             height = (measuredWidth * ratio).toInt()
                         }
                     }
-                    // 加载
-                    tag = context.loadPixvImg(mUrl, illusstId, viewHolder.mIvItem, false)
                 }
             },
             {
@@ -135,11 +132,62 @@ class CommonListAdapter(private val context: Context, private val itemClickListe
      * 绑定view复用部分
      */
     private fun bindView(holder: ViewHolder, bean: IllustsBean) {
+        val mUrl = bean.imageUrls.medium
+        val illusstId = bean.id
         holder.itemView.apply {
             setTag(R.id.tag_holder, holder)
             setOnClickListener(itemClickListener)
+            // 加载
+            tag = context?.loadPixvImg(mUrl, illusstId, holder.mIvItem, false)
         }
+        showBookmark(holder, bean, illusstId.toLong())
         showImgSize(holder, bean)
+    }
+
+    /**
+     * 显示收藏状态
+     */
+    private fun showBookmark(holder: ViewHolder, bean: IllustsBean, illusstId: Long) {
+        if (showLikeStat) {
+            holder.mCbItemLike.apply {
+                isSelected = bean.isBookmarked
+                setOnClickListener {
+                    if (isSelected) {
+                        PixivImagePresenter.postUnlikeIllust(illusstId, object : PublicCallback.StatCallBack {
+                            override fun onStart() {
+                            }
+
+                            override fun onFailed(msg: String) {
+                                MyApplication.context.get()?.toast("失败：$msg")
+                            }
+
+                            override fun onSuccess() {
+                                isSelected = !isSelected
+                                bean.isBookmarked = isSelected
+                            }
+
+                        })
+                    } else {
+                        PixivImagePresenter.postLikeIllust(illusstId, object : PublicCallback.StatCallBack {
+                            override fun onStart() {
+                            }
+
+                            override fun onFailed(msg: String) {
+                                MyApplication.context.get()?.toast("失败：$msg")
+                            }
+
+                            override fun onSuccess() {
+                                isSelected = !isSelected
+                                bean.isBookmarked = isSelected
+                            }
+
+                        })
+                    }
+                }
+            }
+        } else {
+            holder.mCbItemLike.visibility = View.GONE
+        }
     }
 
     /**
@@ -156,5 +204,6 @@ class CommonListAdapter(private val context: Context, private val itemClickListe
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val mIvItem: ImageView by bindView(R.id.iv_item)
         val mTvItemSize: TextView by bindView(R.id.tv_item_size)
+        val mCbItemLike: Button by bindView(R.id.cb_item_like)
     }
 }

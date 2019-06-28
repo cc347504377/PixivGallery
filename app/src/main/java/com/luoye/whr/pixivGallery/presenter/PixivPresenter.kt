@@ -66,6 +66,16 @@ object PixivImagePresenter {
         PresenterUtil.getData(call, callback)
     }
 
+    fun postLikeIllust(id: Long, callback: PublicCallback.StatCallBack) {
+        val call = PixivImageModel.postLikeIllust(id)
+        PresenterUtil.getCall("postLikeIllust", call, callback)
+    }
+
+    fun postUnlikeIllust(id: Long, callback: PublicCallback.StatCallBack) {
+        val call = PixivImageModel.postUnlikeIllust(id)
+        PresenterUtil.getCall("postUnlikeIllust", call, callback)
+    }
+
     fun getUserFollowing() {
         val call = PixivImageModel.getUserFollowing()
         PresenterUtil.saveJson("follow", MyApplication.context.get()!!, call)

@@ -58,7 +58,7 @@ abstract class BaseListFragment : BaseControlFragment(), (MutableList<String>, M
 
     /***************共享元素**************/
 
-    private val listAdapter by lazy { CommonListAdapter(requireContext(), this) }
+    protected val listAdapter by lazy { CommonListAdapter(requireContext(), this) }
     private val gridItemDecoration = MyItemDecoration()
     protected var nextUrl: String? = null
     protected var dataOperation: ((MutableList<IllustsBean>) -> Unit)? = null

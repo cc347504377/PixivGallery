@@ -22,6 +22,7 @@ class LikeFragment : BaseTabListFragment() {
     private fun initList() {
         setupRecyclerView()
         ll_frg_list.refresh()
+        listAdapter.showLikeStat = false
     }
 
     override fun getData(dataOperation: (MutableList<IllustsBean>) -> Unit) {

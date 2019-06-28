@@ -77,6 +77,10 @@ object PixivImageModel {
      */
     fun getLikeIllust() = api.getLikeIllust(getAuth(), SpUtil.userId, "public", null)
 
+    fun postLikeIllust(id: Long) = api.postLikeIllust(getAuth(), id, "public", null)
+
+    fun postUnlikeIllust(id: Long) = api.postUnlikeIllust(getAuth(), id)
+
     fun getUserFollowing() = api.getUserFollowing(getAuth(), SpUtil.userId, "public")
 
     fun getUserIllust(userId: String) = api.getUserIllusts(getAuth(), userId, null)
