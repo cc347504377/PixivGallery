@@ -1,18 +1,15 @@
 package com.luoye.whr.pixivGallery
 
 import android.app.Application
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import android.os.Handler
 import com.google.gson.JsonSyntaxException
 import com.luoye.whr.kotlinlibrary.util.fromJson
-import com.luoye.whr.kotlinlibrary.util.log
+import com.luoye.whr.kotlinlibrary.util.toast
 import com.luoye.whr.pixivGallery.common.PixivAuthBean
 import com.luoye.whr.pixivGallery.common.SpUtil
-import com.luoye.whr.pixivGallery.presenter.PixivUserPresenter
-import com.luoye.whr.kotlinlibrary.util.toast
 import com.luoye.whr.pixivGallery.model.PixivUserModel
 import com.luoye.whr.pixivGallery.presenter.IllustCallback
-import java.lang.Exception
+import com.luoye.whr.pixivGallery.presenter.PixivUserPresenter
 import java.lang.ref.WeakReference
 
 class MyApplication : Application() {
@@ -20,9 +17,19 @@ class MyApplication : Application() {
         lateinit var context: WeakReference<MyApplication>
     }
 
+    private val mainHandler by lazy {
+        Handler(mainLooper)
+    }
+
     override fun onCreate() {
         super.onCreate()
         context = WeakReference(this)
+    }
+
+    fun postMainThread(operation: MyApplication.() -> Unit) {
+        mainHandler.post {
+            operation(this)
+        }
     }
 
     /**

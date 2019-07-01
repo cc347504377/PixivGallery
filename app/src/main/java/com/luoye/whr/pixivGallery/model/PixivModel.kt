@@ -1,6 +1,7 @@
 package com.luoye.whr.pixivGallery.model
 
 import com.luoye.whr.kotlinlibrary.util.createRetrofit
+import com.luoye.whr.kotlinlibrary.util.toast
 import com.luoye.whr.pixivGallery.MyApplication
 import com.luoye.whr.pixivGallery.api.PixivImageApi
 import com.luoye.whr.pixivGallery.api.PixivUserApi
@@ -48,12 +49,12 @@ object PixivImageModel {
      * 搜索
      */
     fun getSearch(
-            word: String,
-            sort: String,
-            search_target: String,
-            bookmark_num: Int? = null,
-            duration: String? = null,
-            Authorization: String
+        word: String,
+        sort: String,
+        search_target: String,
+        bookmark_num: Int? = null,
+        duration: String? = null,
+        Authorization: String
     ) = api.getSearchIllust(word, sort,
             search_target, bookmark_num, duration, Authorization)
 
@@ -118,6 +119,9 @@ fun retrofitOperation(builder: OkHttpClient.Builder) {
                 .build()
         val response = it.proceed(request)
         if (response.code() == HttpURLConnection.HTTP_BAD_REQUEST) {
+            MyApplication.context.get()?.postMainThread {
+                toast("更新用户信息")
+            }
             return@addInterceptor runBlocking {
                 val job = GlobalScope.launch {
                     MyApplication.context.get()?.refreshTokenSync()

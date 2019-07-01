@@ -2,16 +2,16 @@ package com.luoye.whr.pixivGallery.view.home.like
 
 import android.os.Bundle
 import android.view.View
+import com.luoye.whr.kotlinlibrary.util.toast
+import com.luoye.whr.pixivGallery.adapter.LikeListAdapter
 import com.luoye.whr.pixivGallery.common.CommonIllustBean
 import com.luoye.whr.pixivGallery.common.IllustsBean
+import com.luoye.whr.pixivGallery.presenter.IllustCallback
 import com.luoye.whr.pixivGallery.presenter.PixivImagePresenter
 import com.luoye.whr.pixivGallery.view.base.BaseTabListFragment
-import com.luoye.whr.kotlinlibrary.util.toast
-import com.luoye.whr.pixivGallery.presenter.IllustCallback
 import kotlinx.android.synthetic.main.fragment_img_list.*
 
 class LikeFragment : BaseTabListFragment() {
-
     var style = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -19,10 +19,12 @@ class LikeFragment : BaseTabListFragment() {
         initList()
     }
 
+    override fun getListAdapter() =
+            LikeListAdapter(requireContext(), this)
+
     private fun initList() {
         setupRecyclerView()
         ll_frg_list.refresh()
-        listAdapter.showLikeStat = false
     }
 
     override fun getData(dataOperation: (MutableList<IllustsBean>) -> Unit) {

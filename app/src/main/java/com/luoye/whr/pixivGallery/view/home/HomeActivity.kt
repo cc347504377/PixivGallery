@@ -61,9 +61,9 @@ class HomeActivity : PermissionBaseActivity(), NavigationView.OnNavigationItemSe
     private val sharedElementsCallList = ArrayList<(names: MutableList<String>, sharedElements: MutableMap<String, View>) -> Unit>()
 
     fun addSharedCallback(
-            callback: ((names: MutableList<String>,
-                        sharedElements: MutableMap<String, View>
-            ) -> Unit)
+        callback: ((names: MutableList<String>,
+            sharedElements: MutableMap<String, View>
+        ) -> Unit)
     ) {
         if (!sharedElementsCallList.contains(callback)) {
             sharedElementsCallList.add(callback)
@@ -71,9 +71,9 @@ class HomeActivity : PermissionBaseActivity(), NavigationView.OnNavigationItemSe
     }
 
     fun removeSharedCallback(
-            callback: ((names: MutableList<String>,
-                        sharedElements: MutableMap<String, View>
-            ) -> Unit)
+        callback: ((names: MutableList<String>,
+            sharedElements: MutableMap<String, View>
+        ) -> Unit)
     ) {
         sharedElementsCallList.remove(callback)
     }

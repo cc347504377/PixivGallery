@@ -4,18 +4,16 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import com.luoye.whr.pixivGallery.R
-import com.luoye.whr.pixivGallery.common.IllustsBean
-import com.luoye.whr.pixivGallery.common.loadPixvImg
 import com.luoye.whr.kotlinlibrary.base.BaseAdapter
 import com.luoye.whr.kotlinlibrary.net.PublicCallback
 import com.luoye.whr.kotlinlibrary.util.bindView
 import com.luoye.whr.kotlinlibrary.util.toast
 import com.luoye.whr.pixivGallery.MyApplication
-import com.luoye.whr.pixivGallery.presenter.IllustCallback
+import com.luoye.whr.pixivGallery.R
+import com.luoye.whr.pixivGallery.common.IllustsBean
+import com.luoye.whr.pixivGallery.common.loadPixvImg
 import com.luoye.whr.pixivGallery.presenter.PixivImagePresenter
 
 /**
@@ -23,7 +21,7 @@ import com.luoye.whr.pixivGallery.presenter.PixivImagePresenter
  * 包含三种样式：列表、表格、自适应列表
  * 三种适配器数据为共享数据
  */
-class CommonListAdapter(private val context: Context, private val itemClickListener: View.OnClickListener) {
+open class CommonListAdapter(private val context: Context, protected val itemClickListener: View.OnClickListener) {
 
     var style = 0
     var showLikeStat = true
@@ -114,6 +112,22 @@ class CommonListAdapter(private val context: Context, private val itemClickListe
             })
 
     /**
+     * 绑定view复用部分
+     */
+    protected open fun bindView(holder: ViewHolder, bean: IllustsBean) {
+        val mUrl = bean.imageUrls.medium
+        val illusstId = bean.id
+        holder.itemView.apply {
+            setTag(R.id.tag_holder, holder)
+            setOnClickListener(itemClickListener)
+            // 加载
+            tag = context?.loadPixvImg(mUrl, illusstId, holder.mIvItem, false)
+        }
+        showBookmark(holder, bean, illusstId.toLong())
+        showImgSize(holder, bean)
+    }
+
+    /**
      * 显示角标
      * 可能存在多张图片的图片集
      */
@@ -126,22 +140,6 @@ class CommonListAdapter(private val context: Context, private val itemClickListe
                 visibility = View.INVISIBLE
             }
         }
-    }
-
-    /**
-     * 绑定view复用部分
-     */
-    private fun bindView(holder: ViewHolder, bean: IllustsBean) {
-        val mUrl = bean.imageUrls.medium
-        val illusstId = bean.id
-        holder.itemView.apply {
-            setTag(R.id.tag_holder, holder)
-            setOnClickListener(itemClickListener)
-            // 加载
-            tag = context?.loadPixvImg(mUrl, illusstId, holder.mIvItem, false)
-        }
-        showBookmark(holder, bean, illusstId.toLong())
-        showImgSize(holder, bean)
     }
 
     /**
@@ -165,7 +163,6 @@ class CommonListAdapter(private val context: Context, private val itemClickListe
                                 isSelected = !isSelected
                                 bean.isBookmarked = isSelected
                             }
-
                         })
                     } else {
                         PixivImagePresenter.postLikeIllust(illusstId, object : PublicCallback.StatCallBack {
@@ -180,7 +177,6 @@ class CommonListAdapter(private val context: Context, private val itemClickListe
                                 isSelected = !isSelected
                                 bean.isBookmarked = isSelected
                             }
-
                         })
                     }
                 }

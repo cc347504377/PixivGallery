@@ -6,7 +6,6 @@ import com.luoye.whr.pixivGallery.model.PixivImageModel
 import com.luoye.whr.pixivGallery.model.PixivUserModel
 import com.luoye.whr.kotlinlibrary.net.PresenterUtil
 import com.luoye.whr.kotlinlibrary.net.PublicCallback
-import com.luoye.whr.kotlinlibrary.util.log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

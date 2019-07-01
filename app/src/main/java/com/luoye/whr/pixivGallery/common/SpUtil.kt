@@ -82,7 +82,7 @@ object SpUtil {
             }
         }
 
-    var adultMode:Boolean
+    var adultMode: Boolean
         get() = sp?.getBoolean("adultMode", false) ?: false
         set(value) {
             sp?.let {

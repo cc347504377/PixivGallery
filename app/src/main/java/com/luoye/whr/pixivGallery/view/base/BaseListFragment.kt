@@ -58,18 +58,22 @@ abstract class BaseListFragment : BaseControlFragment(), (MutableList<String>, M
 
     /***************共享元素**************/
 
-    protected val listAdapter by lazy { CommonListAdapter(requireContext(), this) }
+    private lateinit var listAdapter: CommonListAdapter
     private val gridItemDecoration = MyItemDecoration()
     protected var nextUrl: String? = null
     protected var dataOperation: ((MutableList<IllustsBean>) -> Unit)? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        listAdapter = getListAdapter()
         return inflater.inflate(R.layout.fragment_img_list, container, false)
     }
 
     override fun changeStyle() {
         setupRecyclerView()
     }
+
+    protected open fun getListAdapter(): CommonListAdapter =
+            CommonListAdapter(requireContext(), this)
 
     /**
      * 设置列表风格参数

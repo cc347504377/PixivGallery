@@ -1,10 +1,7 @@
 package com.luoye.whr.pixivGallery.view.base
 
-import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.View
-import com.luoye.whr.kotlinlibrary.util.log
 
 abstract class BasePageListFragment : BaseSharedFragment() {
 

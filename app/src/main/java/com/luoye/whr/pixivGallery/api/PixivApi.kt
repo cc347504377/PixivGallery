@@ -70,15 +70,19 @@ interface PixivImageApi {
 
     @FormUrlEncoded
     @POST("/v2/illust/bookmark/add")
-    fun postLikeIllust(@Header("Authorization") paramString1: String,
-                       @Field("illust_id") paramLong: Long,
-                       @Field("restrict") paramString2: String,
-                       @Field("tags[]") paramList: List<String>?): Call<ResponseBody>
+    fun postLikeIllust(
+        @Header("Authorization") paramString1: String,
+        @Field("illust_id") paramLong: Long,
+        @Field("restrict") paramString2: String,
+        @Field("tags[]") paramList: List<String>?
+    ): Call<ResponseBody>
 
     @FormUrlEncoded
     @POST("/v1/illust/bookmark/delete")
-    fun postUnlikeIllust(@Header("Authorization") paramString: String,
-                         @Field("illust_id") paramLong: Long): Call<ResponseBody>
+    fun postUnlikeIllust(
+        @Header("Authorization") paramString: String,
+        @Field("illust_id") paramLong: Long
+    ): Call<ResponseBody>
 
     // 关注的用户
     @GET("/v1/user/following?filter=for_android")

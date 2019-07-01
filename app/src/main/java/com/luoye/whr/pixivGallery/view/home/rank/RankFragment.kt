@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bigkoo.pickerview.TimePickerView
-import com.luoye.whr.kotlinlibrary.util.log
 import com.luoye.whr.pixivGallery.R
 import com.luoye.whr.pixivGallery.adapter.RankFrgAdapter
 import com.luoye.whr.pixivGallery.common.ModeEvent

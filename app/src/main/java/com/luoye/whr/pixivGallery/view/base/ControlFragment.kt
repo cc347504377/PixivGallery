@@ -6,6 +6,6 @@ interface ControlFragment {
     fun changeStyle()
 }
 
-abstract class BaseControlFragment : Fragment(), ControlFragment{
+abstract class BaseControlFragment : Fragment(), ControlFragment {
     var styleFlag = 0
 }
