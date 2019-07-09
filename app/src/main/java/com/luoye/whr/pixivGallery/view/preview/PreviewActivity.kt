@@ -3,10 +3,10 @@ package com.luoye.whr.pixivGallery.view.preview
 import android.app.ActivityOptions
 import android.app.SharedElementCallback
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.luoye.whr.pixivGallery.R
 import com.luoye.whr.pixivGallery.adapter.ViewPagerFrgAdapter
@@ -49,7 +49,7 @@ class PreviewActivity : AppCompatActivity() {
             } else {
                 intent.putExtra("shareElement", true)
                 val bundle = ActivityOptions.makeSceneTransitionAnimation(fragment.requireActivity(),
-                        shareView, fragment.getString(R.string.transName)).toBundle()
+                    shareView, fragment.getString(R.string.transName)).toBundle()
                 fragment.startActivity(intent, bundle)
             }
         }

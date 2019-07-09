@@ -96,7 +96,6 @@ open class CommonListAdapter(private val context: Context, protected val itemCli
             { data, holder, position ->
                 val viewHolder = holder as ViewHolder
                 val bean = data[position]
-
                 bindView(viewHolder, bean)
                 viewHolder.itemView.apply {
                     post {

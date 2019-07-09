@@ -35,7 +35,7 @@ abstract class BaseListFragment : BaseControlFragment(), (MutableList<String>, M
             sharedElements.clear()
             names.clear()
             ll_frg_list.recyclerView.findViewHolderForAdapterPosition(position)?.let {
-                sharedElements[getString(R.string.transName)] = it.itemView
+                sharedElements[getString(R.string.transName)] = (it as CommonListAdapter.ViewHolder).mIvItem
             }
             false
         } else {
@@ -73,7 +73,7 @@ abstract class BaseListFragment : BaseControlFragment(), (MutableList<String>, M
     }
 
     protected open fun getListAdapter(): CommonListAdapter =
-            CommonListAdapter(requireContext(), this)
+        CommonListAdapter(requireContext(), this)
 
     /**
      * 设置列表风格参数
@@ -118,7 +118,7 @@ abstract class BaseListFragment : BaseControlFragment(), (MutableList<String>, M
             val holder = it as CommonListAdapter.ViewHolder
             val bean = data[holder.layoutPosition]
             if (holder.mIvItem.drawable == null) {
-                context?.loadPixvImg(bean.imageUrls.medium, bean.id, holder.mIvItem)
+                context?.loadPixvImg(bean.imageUrls.medium, bean.id, holder.mIvItem, false)
             }
         }
     }
@@ -143,7 +143,7 @@ abstract class BaseListFragment : BaseControlFragment(), (MutableList<String>, M
         val viewHolder = v.getTag(R.id.tag_holder) as CommonListAdapter.ViewHolder
         setupPreviewSelectListener()
         PreviewActivity.startActivity(this, this@BaseListFragment.listAdapter.adapter.data,
-                viewHolder.layoutPosition, viewHolder.itemView)
+            viewHolder.layoutPosition, viewHolder.mIvItem)
     }
 
     /**

@@ -115,7 +115,7 @@ class HomeActivity : PermissionBaseActivity(), NavigationView.OnNavigationItemSe
                 changeStyle()
             }
         }
-        bn_main.setOnNavigationItemSelectedListener { it ->
+        bn_main.setOnNavigationItemSelectedListener {
             tv_home_tb_title.text = it.title
             when (it.itemId) {
                 R.id.nv_item_fire -> {

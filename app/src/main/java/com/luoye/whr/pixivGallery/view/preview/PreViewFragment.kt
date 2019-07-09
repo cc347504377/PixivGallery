@@ -7,6 +7,7 @@ import android.graphics.Point
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,51 +49,63 @@ class PreViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         initListener()
-        initRelatedList()
     }
 
     private fun initView() {
         fl_fragment_preview_related.visibility = View.GONE
         bean?.let {
-            // 设置imageView比例
-            iv_fragment_preview.apply {
-                post {
-                    layoutParams = layoutParams.apply {
-                        val ratio = it.height / it.width.toFloat()
-                        height = (measuredWidth * ratio).toInt()
-                    }
+            initImage(it)
+            initData(it)
+            initTag(it)
+//            initRelatedList()
+        }
+    }
+
+    private fun initImage(bean: IllustsBean) {
+        // 设置imageView比例
+        iv_fragment_preview.apply {
+            post {
+                layoutParams = layoutParams.apply {
+                    val ratio = bean.height / bean.width.toFloat()
+                    height = (measuredWidth * ratio).toInt()
                 }
             }
-            // 加载图片
-            loadPreviewImage(it)
-            // 设置title
-            tv_frg_pView_title.text = it.title
-            tv_frg_pView_time.text = it.createDate.substringBefore('T')
-            tv_frg_pView_views.text = it.totalView.toString()
-            tv_frg_pView_collection.text = it.totalBookmarks.toString()
-            // 显示图片数
-            showImgSize(tv_fragment_preview_size, it)
-            // 显示tag
-            val tagList = ArrayList<String>()
-            it.tags.forEach {
-                tagList.add(it.name)
+        }
+        // 加载图片
+        loadPreviewImage(bean)
+    }
+
+    private fun initData(bean: IllustsBean) {
+        // 设置title
+        tv_frg_pView_title.text = bean.title
+        tv_frg_pView_time.text = bean.createDate.substringBefore('T')
+        tv_frg_pView_views.text = bean.totalView.toString()
+        tv_frg_pView_collection.text = bean.totalBookmarks.toString()
+        // 显示图片数
+        showImgSize(tv_fragment_preview_size, bean)
+    }
+
+    private fun initTag(bean: IllustsBean) {
+        // 显示tag
+        val tagList = ArrayList<String>()
+        bean.tags.forEach {
+            tagList.add(it.name)
+        }
+        fl_fragment_preview_tag.adapter = object : TagAdapter<String>(tagList) {
+            override fun getView(parent: FlowLayout?, position: Int, t: String?): View {
+                val view = layoutInflater.inflate(R.layout.item_flow_tag, parent, false) as TextView
+                view.text = tagList[position]
+                return view
             }
-            fl_fragment_preview_tag.adapter = object : TagAdapter<String>(tagList) {
-                override fun getView(parent: FlowLayout?, position: Int, t: String?): View {
-                    val view = layoutInflater.inflate(R.layout.item_flow_tag, parent, false) as TextView
-                    view.text = tagList[position]
-                    return view
-                }
-            }
-            // 跳转tag搜索
-            fl_fragment_preview_tag.setOnTagClickListener { view, position, parent ->
-                startActivity(Intent(activity, SearchListActivity::class.java).apply {
-                    putExtras(Bundle().apply {
-                        putString("keyWord", tagList[position])
-                    })
+        }
+        // 跳转tag搜索
+        fl_fragment_preview_tag.setOnTagClickListener { _, position, _ ->
+            startActivity(Intent(activity, SearchListActivity::class.java).apply {
+                putExtras(Bundle().apply {
+                    putString("keyWord", tagList[position])
                 })
-                true
-            }
+            })
+            true
         }
     }
 
@@ -116,16 +129,27 @@ class PreViewFragment : Fragment() {
     private fun loadPreviewImage(it: IllustsBean) {
         if (!loadPreviewFromFile(it)) {
             requireActivity().loadPixvImg(it.imageUrls.medium, it.id, iv_fragment_preview, false,
-                    object : RequestListener<Drawable> {
-                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                            return false
-                        }
+                object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
 
-                        override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                            shareElementLoad()
-                            return false
-                        }
-                    })
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        shareElementLoad()
+                        return false
+                    }
+                })
         }
     }
 
@@ -181,6 +205,7 @@ class PreViewFragment : Fragment() {
     private fun shareElementLoad() {
         if (current) {
             iv_fragment_preview.post {
+                ViewCompat.setTransitionName(iv_fragment_preview, getString(R.string.transName))
                 activity?.supportStartPostponedEnterTransition()
                 isViewMeasured = false
             }

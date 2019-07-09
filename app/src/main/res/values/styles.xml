@@ -6,10 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowFullscreen">false</item>
     </style>
 
     <style name="TranslucentStyle" parent="AppTheme">
+        <item name="android:windowContentTransitions">true</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 

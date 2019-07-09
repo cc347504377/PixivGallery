@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.luoye.whr.pixivGallery.view.custome.SynergyScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.luoye.whr.pixivGallery.view.custome.SynergyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    android:paddingEnd="22dp"
     android:paddingStart="22dp"
+    android:paddingEnd="22dp"
     android:scrollbars="none"
     tools:context=".view.preview.PreviewActivity">
 
@@ -44,9 +43,7 @@
             <ImageView
                 android:id="@+id/iv_fragment_preview"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:scaleType="fitXY"
-                android:transitionName="@string/transName" />
+                android:layout_height="500dp" />
 
             <TextView
                 android:id="@+id/tv_fragment_preview_size"
@@ -73,16 +70,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp">
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="发布时间："
                         android:textColor="@android:color/black"
-                        android:textStyle="bold"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_frg_pView_time"
@@ -90,24 +87,24 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:textColor="@color/color3333"
-                        android:textStyle="bold"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp">
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="浏览数："
                         android:textColor="@android:color/black"
-                        android:textStyle="bold"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_frg_pView_views"
@@ -115,24 +112,24 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:textColor="@color/color3333"
-                        android:textStyle="bold"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp">
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="收藏数："
                         android:textColor="@android:color/black"
-                        android:textStyle="bold"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_frg_pView_collection"
@@ -140,23 +137,23 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:textColor="@color/color3333"
-                        android:textStyle="bold"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <com.zhy.view.flowlayout.TagFlowLayout
                     android:id="@+id/fl_fragment_preview_tag"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp" />
             </LinearLayout>
 
         </android.support.design.card.MaterialCardView>
 
         <android.support.design.card.MaterialCardView
-            style="@style/preview_card_style"
             android:id="@+id/fl_fragment_preview_related"
+            style="@style/preview_card_style"
             android:layout_marginTop="20dp" />
     </LinearLayout>
 
