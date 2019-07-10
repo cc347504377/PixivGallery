@@ -1,0 +1,3 @@
+[submodule "kotlinLibrary"]
+	path = kotlinLibrary
+	url = https://github.com/cc347504377/KotlinLibrary.git
