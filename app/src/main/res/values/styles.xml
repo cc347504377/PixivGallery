@@ -15,7 +15,7 @@
     </style>
 
     <style name="listItemClickStyle">
-        <item name="android:foreground">@drawable/ripple_list_item</item>
+        <item name="android:background">@drawable/ripple_list_item</item>
     </style>
 
     <style name="TabText" parent="TextAppearance.AppCompat">

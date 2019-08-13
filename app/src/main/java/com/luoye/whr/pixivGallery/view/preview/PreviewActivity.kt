@@ -70,10 +70,11 @@ class PreviewActivity : AppCompatActivity() {
         if (!shareElementStat) {
             return
         }
-        selectIndex = position
         supportPostponeEnterTransition()
+        selectIndex = position
         setEnterSharedElementCallback(object : SharedElementCallback() {
             override fun onMapSharedElements(names: MutableList<String>?, sharedElements: MutableMap<String, View>?) {
+                names?.clear()
                 sharedElements?.clear()
                 sharedElements?.put(getString(R.string.transName), frgList[selectIndex].getTransView())
             }

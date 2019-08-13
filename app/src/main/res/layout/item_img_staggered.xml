@@ -6,7 +6,6 @@
 
     <ImageView
         android:id="@+id/iv_item"
-        style="@style/listItemClickStyle"
         android:layout_width="match_parent"
         android:scaleType="fitXY"
         android:layout_height="match_parent"/>

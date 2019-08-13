@@ -21,7 +21,7 @@ import com.luoye.whr.pixivGallery.presenter.PixivImagePresenter
  * 包含三种样式：列表、表格、自适应列表
  * 三种适配器数据为共享数据
  */
-open class CommonListAdapter(private val context: Context, protected val itemClickListener: View.OnClickListener) {
+open class CommonListAdapter(private val context: Context, private val itemClickListener: View.OnClickListener) {
 
     var style = 0
     var showLikeStat = true

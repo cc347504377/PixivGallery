@@ -7,7 +7,6 @@ import android.graphics.Point
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +15,14 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.luoye.whr.kotlinlibrary.util.compressBitmap
+import com.luoye.whr.kotlinlibrary.util.fileName
+import com.luoye.whr.kotlinlibrary.util.runOnUiThread
 import com.luoye.whr.pixivGallery.R
-import com.luoye.whr.pixivGallery.common.*
+import com.luoye.whr.pixivGallery.common.IllustsBean
+import com.luoye.whr.pixivGallery.common.folder
+import com.luoye.whr.pixivGallery.common.loadPixvImg
 import com.luoye.whr.pixivGallery.view.search.SearchListActivity
-import com.luoye.whr.kotlinlibrary.util.*
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.fragment_img_preview.*
@@ -37,8 +40,6 @@ class PreViewFragment : Fragment() {
 
     // 是否为viewpager显示目标
     var current = false
-    // 共享元素是否测量完成
-    private var isViewMeasured = true
     private val requestCode = 0x11
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -69,10 +70,9 @@ class PreViewFragment : Fragment() {
                     val ratio = bean.height / bean.width.toFloat()
                     height = (measuredWidth * ratio).toInt()
                 }
+                loadPreviewImage(bean)
             }
         }
-        // 加载图片
-        loadPreviewImage(bean)
     }
 
     private fun initData(bean: IllustsBean) {
@@ -204,11 +204,7 @@ class PreViewFragment : Fragment() {
      */
     private fun shareElementLoad() {
         if (current) {
-            iv_fragment_preview.post {
-                ViewCompat.setTransitionName(iv_fragment_preview, getString(R.string.transName))
-                activity?.supportStartPostponedEnterTransition()
-                isViewMeasured = false
-            }
+            activity?.supportStartPostponedEnterTransition()
         }
     }
 
